@@ -7,3 +7,6 @@
 /pkg/
 /spec/reports/
 /tmp/
+/bundle/
+/etc/
+.DS_Store

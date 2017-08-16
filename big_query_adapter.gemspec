@@ -2,16 +2,16 @@
 
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'odbc_adapter/version'
+require 'big_query_adapter/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'odbc_adapter'
-  spec.version       = ODBCAdapter::VERSION
-  spec.authors       = ['Localytics']
-  spec.email         = ['oss@localytics.com']
+  spec.name          = 'big_query_adapter'
+  spec.version       = BigQueryAdapter::VERSION
+  spec.authors       = ['pedrocarmona']
+  spec.email         = ['pcarmona1990@gmail.com']
 
-  spec.summary       = 'An ActiveRecord ODBC adapter'
-  spec.homepage      = 'https://github.com/localytics/odbc_adapter'
+  spec.summary       = 'An ActiveRecord Google BigQuery adapter'
+  spec.homepage      = 'https://github.com/pedrocarmona/big_query_adapter'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
@@ -21,11 +21,11 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'ruby-odbc', '~> 0.9'
+  spec.add_dependency 'google-cloud-bigquery', '~> 0.27.1'
 
-  spec.add_development_dependency 'bundler', '~> 1.14'
-  spec.add_development_dependency 'minitest', '~> 5.10'
+  spec.add_development_dependency 'bundler', '~> 1.13'
   spec.add_development_dependency 'rake', '~> 12.0'
+  spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rubocop', '~> 0.48'
   spec.add_development_dependency 'simplecov', '~> 0.14'
 end

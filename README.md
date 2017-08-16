@@ -1,60 +1,51 @@
-# ODBCAdapter
+# BigQueryAdapter
 
-[![Build Status](https://travis-ci.org/localytics/odbc_adapter.svg?branch=master)](https://travis-ci.org/localytics/odbc_adapter)
-[![Gem](https://img.shields.io/gem/v/odbc_adapter.svg)](https://rubygems.org/gems/odbc_adapter)
+EXPERIMENTAL VERSION:
 
-An ActiveRecord ODBC adapter. Master branch is working off of Rails 5.0.1. Previous work has been done to make it compatible with Rails 3.2 and 4.2; for those versions use the 3.2.x or 4.2.x gem releases.
+Features so far:
+- perform select queries in a bigquery table, using
+- possibility to generate schema
 
-This adapter will work for basic queries for most DBMSs out of the box, without support for migrations. Full support is built-in for MySQL 5 and PostgreSQL 9 databases. You can register your own adapter to get more support for your DBMS using the `ODBCAdapter.register` function.
+Inspiration and fork of the project:
 
-A lot of this work is based on [OpenLink's ActiveRecord adapter](http://odbc-rails.rubyforge.org/) which works for earlier versions of Rails.
+[localytics odbc activerecord adapter](https://github.com/localytics/odbc_adapter)
+[blog post](http://www.blrice.net/blog/2016/04/09/one-rails-app-with-many-databases/)
 
-## Installation
-
-Ensure you have the ODBC driver installed on your machine. You will also need the driver for whichever database to which you want ODBC to connect.
+## Usage
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'odbc_adapter'
+gem 'big_query_adapter'
 ```
 
-And then execute:
 
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install odbc_adapter
-
-## Usage
-
-Configure your `database.yml` by either using the `dsn` option to point to a DSN that corresponds to a valid entry in your `~/.odbc.ini` file:
-
-```
-development:
-  adapter:  odbc
-  dsn: MyDatabaseDSN
+```ruby
+  options = { adapter: 'big_query' }
+  options[:keyfile] = "path-to-key-file"
+  options[:project] = "your-project-id"
+  options[:datasets] = [] # specify dataset for faster schema generation
+  ActiveRecord::Base.establish_connection(options)
 ```
 
-or by using the `conn_str` option and specifying the entire connection string:
+TODO: add example
 
-```
-development:
-  adapter: odbc
-  conn_str: "DRIVER={PostgreSQL ANSI};SERVER=localhost;PORT=5432;DATABASE=my_database;UID=postgres;"
-```
+In the meanwhile check this post:
 
-ActiveRecord models that use this connection will now be connecting to the configured database using the ODBC driver.
+[One rails app with many databases](http://www.blrice.net/blog/2016/04/09/one-rails-app-with-many-databases/)
 
-## Testing
+## Development
 
-To run the tests, you'll need the ODBC driver as well as the connection adapter for each database against which you're trying to test. Then run `DSN=MyDatabaseDSN bundle exec rake test` and the test suite will be run by connecting to your database.
+After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+
+To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/localytics/odbc_adapter.
+Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/big_query_adapter. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+
