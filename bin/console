@@ -1,12 +1,13 @@
 #!/usr/bin/env ruby
 
 require 'bundler/setup'
-require 'odbc_adapter'
+require 'big_query_adapter'
 
-options = { adapter: 'odbc' }
-options[:dsn]      = ENV['DSN']      if ENV['DSN']
-options[:conn_str] = ENV['CONN_STR'] if ENV['CONN_STR']
-ActiveRecord::Base.establish_connection(options) if options.any?
+options = { adapter: 'big_query' }
+options[:keyfile] = ENV.fetch('BIGQUERY_KEYFILE')  if ENV['BIGQUERY_KEYFILE']
+options[:project] = ENV.fetch('BIGQUERY_PROJECT')  if ENV['BIGQUERY_PROJECT']
+options[:datasets] = []
+ActiveRecord::Base.establish_connection(options)
 
-require 'irb'
-IRB.start
+require 'pry'
+Pry.start
